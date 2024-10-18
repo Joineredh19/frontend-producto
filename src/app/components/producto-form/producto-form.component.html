@@ -1,0 +1,38 @@
+<div class="flex justify-content-center align-items-center min-h-screen w-full p-4">
+  <p-card [style]="{ width: '100%', maxWidth: '450px' }">
+    <form [formGroup]="formProducto" (ngSubmit)="edit ? actualizarProducto() : crearProducto()">
+      <div class="field">
+        <label for="nombre" class="block mb-2">Nombre *</label>
+        <input id="nombre" type="text" pInputText class="w-full" formControlName="nombre">
+        <small *ngIf="formProducto.get('nombre')?.invalid && formProducto.get('nombre')?.touched" class="p-error block">
+          El nombre es requerido y debe tener al menos 3 caracteres
+        </small>
+      </div>
+
+      <div class="field mt-4">
+        <label for="cantidad" class="block mb-2">Cantidad *</label>
+        <p-inputNumber id="cantidad" class="w-full" formControlName="cantidad" [showButtons]="true" [min]="0" mode="decimal" inputId="minmax-buttons" [useGrouping]="false">
+        </p-inputNumber>
+        <small *ngIf="formProducto.get('cantidad')?.invalid && formProducto.get('cantidad')?.touched" class="p-error block">
+          La cantidad debe ser mayor o igual a 0
+        </small>
+      </div>
+
+      <div class="field mt-4">
+        <label for="precio" class="block mb-2">Precio (COP) *</label>
+        <p-inputNumber id="precio" class="w-full" formControlName="precio" mode="currency" currency="COP" locale="es-CO" [minFractionDigits]="0">
+        </p-inputNumber>
+        <small *ngIf="formProducto.get('precio')?.invalid && formProducto.get('precio')?.touched" class="p-error block">
+          El precio debe ser mayor a 0
+        </small>
+      </div>
+
+      <div class="flex justify-content-end gap-2 mt-4">
+        <p-button type="button" label="Cancelar" (onClick)="router.navigateByUrl('/')" styleClass="p-button-secondary"></p-button>
+        <p-button type="submit" [label]="edit ? 'Actualizar' : 'Crear'" [disabled]="isSaveInProgress"></p-button>
+      </div>
+    </form>
+  </p-card>
+</div>
+
+<p-toast></p-toast>
